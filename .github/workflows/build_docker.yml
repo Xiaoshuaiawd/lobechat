@@ -8,7 +8,6 @@ on:
       - 'README.md'
       - 'docker-compose.yml'
       - 'docs/**'
-      - '.github/workflows/build_docker.yml'
   workflow_dispatch:
 
 jobs:
@@ -37,14 +36,14 @@ jobs:
           images: aliin/lobechat
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
-            type=raw,value=0.0.1
+            type=raw,value=0.0.2
 
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/amd64,linux/arm64
-          file: Dockerfile
+          file: Dockerfile.database
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
